@@ -18,6 +18,7 @@ public class Config {
     }
 
     public void loadConfig() {
+        plugin.reloadConfig();
         FileConfiguration localConfigFile = plugin.getConfig();//load up config file
 
 
@@ -31,6 +32,7 @@ public class Config {
         }*/
 
         //get menus
+        plugin.menuList = new ArrayList<Menu>();
         Set<String> keys = localConfigFile.getConfigurationSection("menus").getKeys(false);
         for (String key : keys) {
             if (loadGUI(localConfigFile, key)) {

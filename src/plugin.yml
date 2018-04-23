@@ -7,3 +7,15 @@ commands:
   guicommands:
       description: 'Core Command for GUICommands'
       usage: '/guicommands'
+
+permissions:
+   guicommands.*:
+     description: Gives access to all GUICommands commands
+     default: op
+     children:
+       guicommands.admin: true
+   guicommands.admin:
+     description: Gives access to administrative command subsection
+     default: op
+     children:
+       guicommands.admin.reload: true

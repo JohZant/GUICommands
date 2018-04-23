@@ -22,7 +22,7 @@ public class GUICommands extends JavaPlugin {
     List<Menu> menuList;//list of menus
     List<CommandMemory> cmdMemoryList;//list of args and commands to store
 
-    final String prefix = ChatColor.GOLD + "[GUICommands]";
+    final String prefix = ChatColor.GOLD + "[GUICommands] ";
 
     /*Fired when the server loads up*/
     @Override

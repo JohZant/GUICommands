@@ -17,6 +17,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/*
+* Listener For Custom Gui Commands
+ */
 public class GUICommandsListener implements Listener {
 
     GUICommands plugin;
@@ -24,14 +27,6 @@ public class GUICommandsListener implements Listener {
     public GUICommandsListener(GUICommands plugin) {
         this.plugin = plugin;
     }
-/*
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
-        //event.setJoinMessage("This is a test." + event.getPlayer().getDisplayName());
-        //Bukkit.broadcastMessage("hey there, " + event.getPlayer().getDisplayName());
-    }
-
-    */
 
     @EventHandler(ignoreCancelled = true)
     public void onCommandExecute(PlayerCommandPreprocessEvent event) {
