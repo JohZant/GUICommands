@@ -1,0 +1,72 @@
+##################################################
+#
+# Written By JohZant of Archetype MC
+#
+# This is a Half Cut Production
+#
+##################################################
+
+#set this to true for a whole lot more rubbish in console. You will hate it, but at least it will help us find issues.
+debug: false
+
+#list of menus
+# put each menu as a child to 'menus'
+menus:
+  #test menu to show how it works
+  Punish: #Menu Name
+    prefix: '[GUICommands]' #Each menu can have it's own prefix so that you can camouflage the GUICommand as a different plugin
+    permission: 'guicommands.menus.punish' #permission to be able to access menu. These are custom permissions.
+    usage: 'punish $arg1 $arg2' #used to determine the order of the arguments
+    rows: 1 #number of rows in GUI. Maximum is 6
+    arguments:
+      arg1:
+        name: '[player]' #this field is used for users memory. The plugin doesn't really care what value is put in here
+      arg2:
+        name: '[-s]'
+    Items: #items in menu
+      item1:
+        material: DIAMOND #material of item
+        data: 0 #data for material
+        amount: 3 #number of material to show
+        slot: 0 #numbered slot to add item to. 0 being the first slot on the first row
+        display_name: 'Xray Hacks' #What the display name of the item is in the GUI
+        lore:
+          - 'Temporary Ban'
+          - '3 days'
+        commands: #commands run by players. Use {player} as a placeholder for the player that is in the GUI. If you are using a command to BAN a player.... you probably should not use {player} in the command
+          console: #console commands are always run before player commands
+            - 'sudo $arg1 c:Oh poop! I got banned!'
+          player:
+            - 'warn $arg2 $arg1 Xray Hacking'
+            - 'tempban $arg1 3d Xray Hacking'
+      fly: #these can really be named anything.
+        material: FEATHER #material of item
+        data: 0 #data for material
+        amount: 1
+        slot: 1 #
+        display_name: 'Fly Hacks'
+        lore:
+          - 'Temporary Ban'
+          - '7 days'
+        commands: #commands run by players
+          console: []
+          player:
+            - 'warn $arg2 $arg1 Xray Hacking'
+            - 'tempban $arg1 3d Xray Hacking'
+      permaban: #these can really be named anything.
+        material: BEDROCK #material of item
+        data: 0 #data for material
+        amount: 1
+        slot: 8 #
+        display_name: 'PermaBan'
+        lore:
+          - 'Permanently ban this player from the server'
+          - 'This is a long time....'
+        commands: #commands run by players
+          console: []
+          player:
+            - 'ban $arg1 The Banhammer has spoken... ya nub'
+
+
+
+

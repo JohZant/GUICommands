@@ -1,0 +1,9 @@
+name: GUICommands
+version: 1.0.0
+author: JohZant
+main: com.arch.guicommands.GUICommands
+website: www.archetype-mc.com
+commands:
+  guicommands:
+      description: 'Core Command for GUICommands'
+      usage: '/guicommands'
