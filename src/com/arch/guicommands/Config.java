@@ -4,8 +4,12 @@ import com.arch.guicommands.Menu.Argument;
 import com.arch.guicommands.Menu.Item;
 import com.arch.guicommands.Menu.Menu;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Config {
@@ -26,16 +30,44 @@ public class Config {
         if (debug) {
             plugin.console.log("Debug Mode is on. Goodluck!");
         }
-        /*bungeemode = localConfigFile.getBoolean("bungeemode");//assign bungeemode. Used to see if we need to communicate to bungee for anything like player list
-        if (bungeemode) {
-            plugin.console.log("Bungeemode was set to true. Opening Channels.");
-        }*/
 
         //get menus
-        plugin.menuList = new ArrayList<Menu>();
+        plugin.menuList = new ArrayList<Menu>();//initialise object list
+        FileConfiguration tempConfig = null;//var to hold config
+        boolean loadSuccess;
+        boolean usingFile;
+
+
         Set<String> keys = localConfigFile.getConfigurationSection("menus").getKeys(false);
         for (String key : keys) {
-            if (loadGUI(localConfigFile, key)) {
+            tempConfig = null;//null for testing
+            usingFile = false;
+            //test if we are looking for a file or reading menu form config
+            if (localConfigFile.contains("menus." + key + ".file")){
+                //test that file is true
+                usingFile = localConfigFile.getBoolean("menus." + key + ".file");
+                if(usingFile) {
+                    //get file config
+                    tempConfig = getYAML(key);
+                }
+            }
+
+            //test if we got YAML back from file
+            if (!usingFile){
+                //not using a file, load menu form config
+                loadSuccess = loadGUI(localConfigFile, key);
+            }
+            else if (tempConfig != null){
+                //using file, load menu from file
+                loadSuccess = loadGUI(tempConfig, key);
+            }
+            else{
+                //config set to using file,
+                // but the file was either null or invalid
+                loadSuccess = false;
+            }
+
+            if (loadSuccess) {
                 plugin.console.log("Loaded Menu: " + ChatColor.GREEN + key);
             } else {
                 plugin.console.log(ChatColor.DARK_RED + "Failed to load menu: " + ChatColor.GRAY + key);
@@ -98,5 +130,24 @@ public class Config {
 
         plugin.menuList.add(tempMenu);//add menu to list
         return true;//nothing has gone wrong, so return true
+    }
+
+    private FileConfiguration getYAML(String key){
+        FileConfiguration c = new YamlConfiguration();
+        try {
+            File f = new File(plugin.getDataFolder(), "menu_" + key + ".yml");
+            c.load(f);
+            return c;
+        }
+        catch (IOException ex){
+            plugin.console.log(ex.getMessage());
+            plugin.console.log(ChatColor.RED + "IOError while reading menu_" + key.toLowerCase());
+        }
+        catch (InvalidConfigurationException ex){
+            plugin.console.log(ex.getMessage());
+            plugin.console.log("menu_" + key.toLowerCase() + " has issues with its configuration.");
+        }
+
+        return null;
     }
 }
