@@ -84,7 +84,7 @@ public class GUICommandsListener implements Listener {
         plugin.cmdMemoryList.add(cMemory);//add our new memory to list
 
 
-        menu.openMenu(player);
+        menu.openMenu(player, plugin);
 
     }
 

@@ -18,9 +18,11 @@ import java.util.List;
  */
 public class GUICommands extends JavaPlugin {
     Config config;//config file
-    Logger console;//logging object
+    public Logger console;//logging object
     List<Menu> menuList;//list of menus
     List<CommandMemory> cmdMemoryList;//list of args and commands to store
+
+    public boolean placeholderAPIEnabled;//variable to check whether PlaceholderAPI is on the server and able to be used
 
     final String prefix = ChatColor.GOLD + "[GUICommands] ";
 
@@ -38,7 +40,15 @@ public class GUICommands extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        /**/
+
+        /*test if placeholder is on server*/
+        placeholderAPIEnabled = isPlaceholderAPIEnabled();
+        if (placeholderAPIEnabled){
+            console.log("Connected to PlaceholderAPI");
+        }
+        else{
+            console.log("PlaceholderAPI not detected");
+        }
 
         /*register Listener */
         getServer().getPluginManager().registerEvents(new GUICommandsListener(this), this);
@@ -110,5 +120,12 @@ public class GUICommands extends JavaPlugin {
 
     public void MessagePlayer(Menu m, Player p, String msg) {
         p.sendMessage(m.getPrefix() + ChatColor.RESET + msg);
+    }
+
+    /*
+    Method to see if PlaceholderAPI is on server
+     */
+    private boolean isPlaceholderAPIEnabled() {
+        return this.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
     }
 }
