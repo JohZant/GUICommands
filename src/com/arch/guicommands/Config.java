@@ -45,9 +45,9 @@ public class Config {
             //test if we are looking for a file or reading menu form config
             if (localConfigFile.contains("menus." + key + ".file")){
                 //test that file is true
-                if(localConfigFile.getBoolean("menus." + key + ".file")) {
+                usingFile = localConfigFile.getBoolean("menus." + key + ".file");
+                if(usingFile) {
                     //get file config
-                    usingFile = true;
                     tempConfig = getYAML(key);
                 }
             }
@@ -135,14 +135,17 @@ public class Config {
     private FileConfiguration getYAML(String key){
         FileConfiguration c = new YamlConfiguration();
         try {
-            File f = new File(plugin.getDataFolder(), "menu_" + key);
+            File f = new File(plugin.getDataFolder(), "menu_" + key + ".yml");
             c.load(f);
+            return c;
         }
         catch (IOException ex){
-            plugin.console.log(ChatColor.RED + "IOError while reading menu_" + key);
+            plugin.console.log(ex.getMessage());
+            plugin.console.log(ChatColor.RED + "IOError while reading menu_" + key.toLowerCase());
         }
         catch (InvalidConfigurationException ex){
-            plugin.console.log("menu_" + key + " has issues with its configuration.");
+            plugin.console.log(ex.getMessage());
+            plugin.console.log("menu_" + key.toLowerCase() + " has issues with its configuration.");
         }
 
         return null;
