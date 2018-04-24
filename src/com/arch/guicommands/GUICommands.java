@@ -18,11 +18,11 @@ import java.util.List;
  */
 public class GUICommands extends JavaPlugin {
     Config config;//config file
-    Logger console;//logging object
+    public Logger console;//logging object
     List<Menu> menuList;//list of menus
     List<CommandMemory> cmdMemoryList;//list of args and commands to store
 
-    boolean placeholderAPIEnabled;//variable to check whether PlaceholderAPI is on the server and able to be used
+    public boolean placeholderAPIEnabled;//variable to check whether PlaceholderAPI is on the server and able to be used
 
     final String prefix = ChatColor.GOLD + "[GUICommands] ";
 
@@ -45,6 +45,9 @@ public class GUICommands extends JavaPlugin {
         placeholderAPIEnabled = isPlaceholderAPIEnabled();
         if (placeholderAPIEnabled){
             console.log("Connected to PlaceholderAPI");
+        }
+        else{
+            console.log("PlaceholderAPI not detected");
         }
 
         /*register Listener */

@@ -1,5 +1,7 @@
 package com.arch.guicommands.Menu;
 
+import com.arch.guicommands.GUICommands;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -76,7 +78,12 @@ public class Menu {
         Rows = rows;
     }
 
-    public void openMenu(Player player) {
+    private GUICommands plugin;
+    private Player player;
+
+    public void openMenu(Player player, GUICommands plugin) {
+        this.plugin = plugin;
+        this.player = player;
 
         //set number of slots for menu
         int guiSlots = getRows()*9 > 54 ? 54 : getRows()*9;//if the slots is greater than 54, just make the slots to be 54
@@ -91,21 +98,31 @@ public class Menu {
 
             //set lore
             ItemMeta meta = guiStack.getItemMeta();
-            meta.setLore(item.getLore());
+            List<String> lore =new ArrayList<String>();
+            //placeholder-ize lore
+            for (String l : item.getLore()){
+                lore.add(getPlaceholderString(l));
+            }
+            meta.setLore(lore);
 
             //set name
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&',item.getDisplayName()));
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&',getPlaceholderString(item.getDisplayName())));
 
             guiStack.setItemMeta(meta);
 
             gui.setItem(item.getSlot(), guiStack);
         }
 
-
-
-
         //Here opens the inventory
         player.openInventory(gui);
+    }
+
+    private String getPlaceholderString(String str){
+        //check if we are using placeholder api
+        if (plugin.placeholderAPIEnabled){
+            str = PlaceholderAPI.setPlaceholders(player, str);
+        }
+        return str;
     }
 
 }
