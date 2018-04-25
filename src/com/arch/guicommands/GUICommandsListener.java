@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /*
-* Listener For Custom Gui Commands
+ * Listener For Custom Gui Commands
  */
 public class GUICommandsListener implements Listener {
 
@@ -149,12 +149,15 @@ public class GUICommandsListener implements Listener {
                         .dispatchCommand(
                                 plugin.getServer().getConsoleSender(),
                                 CommandToRun.replace("[console]", "").trim());
-            }
-            else if(CommandToRun.contains("[player]")){
+            } else if (CommandToRun.contains("[player]")) {
                 //run as player
                 player.performCommand(CommandToRun.replace("[player]", "").trim());
-            }
-            else{
+            } else if (CommandToRun.contains("[message]")) {
+                //message caller
+                player.sendMessage(menu.getPrefix()
+                        + ChatColor.RESET
+                        + CommandToRun.replace("[message]", "").trim());
+            } else {
                 //don't know how to handle.... let console know
                 plugin.console.log("Unknown command: " + CommandToRun);
                 //let player know
