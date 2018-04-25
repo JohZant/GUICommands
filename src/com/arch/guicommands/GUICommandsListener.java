@@ -157,6 +157,11 @@ public class GUICommandsListener implements Listener {
                 player.sendMessage(menu.getPrefix()
                         + ChatColor.RESET
                         + CommandToRun.replace("[message]", "").trim());
+            }
+            else if(CommandToRun.contains("[close]")){
+                //close menu
+                player.closeInventory();//close invent for player
+                plugin.cmdMemoryList.remove(savedCmds);
             } else {
                 //don't know how to handle.... let console know
                 plugin.console.log("Unknown command: " + CommandToRun);
@@ -165,9 +170,7 @@ public class GUICommandsListener implements Listener {
             }
         }
 
-        player.closeInventory();//close invent for players
 
-        plugin.cmdMemoryList.remove(savedCmds);
 
     }
 }

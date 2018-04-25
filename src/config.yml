@@ -53,13 +53,23 @@ menus:
         material: BEDROCK #material of item
         data: 0 #data for material
         amount: 1
-        slot: 8 #
+        slot: 7 #
         display_name: 'PermaBan'
         lore:
           - 'Permanently ban this player from the server'
           - 'This is a long time....'
-        commands: #commands run by players
+        commands:
             - '[player] ban $arg1 The Banhammer has spoken... ya nub'
+      close:
+        material: BARRIER #material of item
+        data: 0 #data for material
+        amount: 1
+        slot: 8 #
+        display_name: '&CClose'
+        lore:
+          - 'Close Punish Menu'
+        commands: #commands run by players
+            - '[close]'
 
 
 
