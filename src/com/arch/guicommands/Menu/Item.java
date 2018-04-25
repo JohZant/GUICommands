@@ -15,7 +15,7 @@ public class Item {
     private int Slot;//which GUI slot to put item in
     private String DisplayName;//display name of item in GUI
     private List<String> Lore;//lore of item in GUI.
-    private Commands Commands;//which commands to run on item click
+    private List<String> Commands;//which commands to run on item click
 
     public int getAmount() {
         return Amount;
@@ -41,7 +41,7 @@ public class Item {
         _Material = material;
     }
 
-    public Commands getCommands() {
+    public List<String> getCommands() {
         return Commands;
     }
 
@@ -61,7 +61,7 @@ public class Item {
         return DisplayName;
     }
 
-    public void setCommands(Commands commands) {
+    public void setCommands(List<String> commands) {
         Commands = commands;
     }
 
@@ -110,9 +110,7 @@ public class Item {
 
 
         //get commands - player
-        Commands = new Commands();
-        Commands.setPlayer(localConfig.getStringList(key + ".commands.player"));
-        Commands.setConsole(localConfig.getStringList(key + ".commands.console"));
+        Commands = localConfig.getStringList(key + ".commands");
 
 
     }
