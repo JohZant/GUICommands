@@ -87,7 +87,7 @@ public class Config {
         tempMenu.setMenuName(key);//sets a menu name
 
         //set prefix
-        tempMenu.setPrefix(localConfigFile.getString(configPath + "prefix"));
+        tempMenu.setPrefix(ChatColor.translateAlternateColorCodes('&',localConfigFile.getString(configPath + "prefix")));
 
         //set permission
         tempMenu.setPermission(localConfigFile.getString(configPath + "permission"));

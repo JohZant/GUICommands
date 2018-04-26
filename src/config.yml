@@ -34,11 +34,9 @@ menus:
           - 'Temporary Ban'
           - '3 days'
         commands: #commands run by players. Use {player} as a placeholder for the player that is in the GUI. If you are using a command to BAN a player.... you probably should not use {player} in the command
-          console: #console commands are always run before player commands
-            - 'sudo $arg1 c:Oh poop! I got banned!'
-          player:
-            - 'warn $arg2 $arg1 Xray Hacking'
-            - 'tempban $arg1 3d Xray Hacking'
+            - '[console] sudo $arg1 c:Oh poop! I got banned!'
+            - '[player] warn $arg2 $arg1 Xray Hacking'
+            - '[player] $arg1 3d Xray Hacking'
       fly: #these can really be named anything.
         material: FEATHER #material of item
         data: 0 #data for material
@@ -49,23 +47,29 @@ menus:
           - 'Temporary Ban'
           - '7 days'
         commands: #commands run by players
-          console: []
-          player:
-            - 'warn $arg2 $arg1 Xray Hacking'
-            - 'tempban $arg1 3d Xray Hacking'
+            - '[player] warn $arg2 $arg1 Xray Hacking'
+            - '[player] tempban $arg1 3d Xray Hacking'
       permaban: #these can really be named anything.
         material: BEDROCK #material of item
         data: 0 #data for material
         amount: 1
-        slot: 8 #
+        slot: 7 #
         display_name: 'PermaBan'
         lore:
           - 'Permanently ban this player from the server'
           - 'This is a long time....'
+        commands:
+            - '[player] ban $arg1 The Banhammer has spoken... ya nub'
+      close:
+        material: BARRIER #material of item
+        data: 0 #data for material
+        amount: 1
+        slot: 8 #
+        display_name: '&CClose'
+        lore:
+          - 'Close Punish Menu'
         commands: #commands run by players
-          console: []
-          player:
-            - 'ban $arg1 The Banhammer has spoken... ya nub'
+            - '[close]'
 
 
 

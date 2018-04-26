@@ -3,6 +3,7 @@ package com.arch.guicommands;
 
 import com.arch.guicommands.Menu.Item;
 import com.arch.guicommands.Menu.Menu;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -127,5 +128,13 @@ public class GUICommands extends JavaPlugin {
      */
     private boolean isPlaceholderAPIEnabled() {
         return this.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
+    }
+
+    public String getPlaceholderString(Player player, String str) {
+        //check if we are using placeholder api
+        if (placeholderAPIEnabled) {
+            str = PlaceholderAPI.setPlaceholders(player, str);
+        }
+        return str;
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /*
-* Listener For Custom Gui Commands
+ * Listener For Custom Gui Commands
  */
 public class GUICommandsListener implements Listener {
 
@@ -135,7 +135,7 @@ public class GUICommandsListener implements Listener {
         String CommandToRun;//this string will hold every command
 
         //execute console commands
-        for (String consoleCMD : item.getCommands().getConsole()) {
+        for (String consoleCMD : item.getCommands()) {
             CommandToRun = consoleCMD.replace("{player}", player.getName());//puts this player in the command
             //add in args
             for (Argument a : savedCmds.args) {
@@ -143,24 +143,35 @@ public class GUICommandsListener implements Listener {
             }
 
             //run command
-            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), CommandToRun);
-        }
-
-        //execute player commands
-        for (String consoleCMD : item.getCommands().getPlayer()) {
-            CommandToRun = consoleCMD.replace("{player}", player.getName());//puts this player in the command
-            //add in args
-            for (Argument a : savedCmds.args) {
-                CommandToRun = CommandToRun.replace("$arg" + a.getArgNum(), a.getName());
+            if (CommandToRun.contains("[console]")) {
+                //run as console
+                plugin.getServer()
+                        .dispatchCommand(
+                                plugin.getServer().getConsoleSender(),
+                                CommandToRun.replace("[console]", "").trim());
+            } else if (CommandToRun.contains("[player]")) {
+                //run as player
+                player.performCommand(CommandToRun.replace("[player]", "").trim());
+            } else if (CommandToRun.contains("[message]")) {
+                //message caller
+                player.sendMessage(menu.getPrefix()
+                        + ChatColor.RESET
+                        + CommandToRun.replace("[message]", "").trim());
+            } else if (CommandToRun.contains("[close]")) {
+                //close menu
+                player.closeInventory();//close invent for player
+                plugin.cmdMemoryList.remove(savedCmds);
+            } else if (CommandToRun.contains("[refresh]")) {
+                //refresh item that was clicked
+                menu.refreshMenu(event);
+            } else {
+                //don't know how to handle.... let console know
+                plugin.console.log("Unknown command: " + CommandToRun);
+                //let player know
+                player.sendMessage(menu.getPrefix() + ChatColor.RED + "There was a problem with running your command. Please report this.");
             }
-
-            //run command
-            player.performCommand(CommandToRun);
         }
 
-        player.closeInventory();//close invet for players
-
-        plugin.cmdMemoryList.remove(savedCmds);
 
     }
 }

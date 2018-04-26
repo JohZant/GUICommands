@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -86,27 +87,27 @@ public class Menu {
         this.player = player;
 
         //set number of slots for menu
-        int guiSlots = getRows()*9 > 54 ? 54 : getRows()*9;//if the slots is greater than 54, just make the slots to be 54
+        int guiSlots = getRows() * 9 > 54 ? 54 : getRows() * 9;//if the slots is greater than 54, just make the slots to be 54
 
         // Here we create our "inventory"
         Inventory gui = Bukkit.getServer().createInventory(player, guiSlots, MenuName);
 
         //go through menu's items and populate grid
-        for (Item item : getItems()){
+        for (Item item : getItems()) {
 
             ItemStack guiStack = new ItemStack(item.getMaterial(), item.getAmount(), item.getData());//make stack of item
 
             //set lore
             ItemMeta meta = guiStack.getItemMeta();
-            List<String> lore =new ArrayList<String>();
+            List<String> lore = new ArrayList<String>();
             //placeholder-ize lore
-            for (String l : item.getLore()){
-                lore.add(getPlaceholderString(l));
+            for (String l : item.getLore()) {
+                lore.add(plugin.getPlaceholderString(player, l));
             }
             meta.setLore(lore);
 
             //set name
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&',getPlaceholderString(item.getDisplayName())));
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getPlaceholderString(player, item.getDisplayName())));
 
             guiStack.setItemMeta(meta);
 
@@ -117,12 +118,31 @@ public class Menu {
         player.openInventory(gui);
     }
 
-    private String getPlaceholderString(String str){
-        //check if we are using placeholder api
-        if (plugin.placeholderAPIEnabled){
-            str = PlaceholderAPI.setPlaceholders(player, str);
+    public void refreshMenu(InventoryClickEvent event) {
+
+        Inventory gui = event.getClickedInventory();
+        player = (Player)event.getWhoClicked();
+
+        for (Item item : getItems()) {
+
+            ItemStack guiStack = new ItemStack(item.getMaterial(), item.getAmount(), item.getData());//make stack of item
+
+            //set lore
+            ItemMeta meta = guiStack.getItemMeta();
+            List<String> lore = new ArrayList<String>();
+            //placeholder-ize lore
+            for (String l : item.getLore()) {
+                lore.add(plugin.getPlaceholderString(player,l));
+            }
+            meta.setLore(lore);
+
+            //set name
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getPlaceholderString(player, item.getDisplayName())));
+
+            guiStack.setItemMeta(meta);
+
+            gui.setItem(item.getSlot(), guiStack);
         }
-        return str;
     }
 
 }
