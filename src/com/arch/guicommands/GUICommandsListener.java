@@ -157,19 +157,13 @@ public class GUICommandsListener implements Listener {
                 player.sendMessage(menu.getPrefix()
                         + ChatColor.RESET
                         + CommandToRun.replace("[message]", "").trim());
-            }
-            else if(CommandToRun.contains("[close]")) {
+            } else if (CommandToRun.contains("[close]")) {
                 //close menu
                 player.closeInventory();//close invent for player
                 plugin.cmdMemoryList.remove(savedCmds);
-            }
-            else if (CommandToRun.contains("[refresh]")){
+            } else if (CommandToRun.contains("[refresh]")) {
                 //refresh item that was clicked
-
-
-
-
-
+                menu.refreshMenu(event);
             } else {
                 //don't know how to handle.... let console know
                 plugin.console.log("Unknown command: " + CommandToRun);
@@ -177,7 +171,6 @@ public class GUICommandsListener implements Listener {
                 player.sendMessage(menu.getPrefix() + ChatColor.RED + "There was a problem with running your command. Please report this.");
             }
         }
-
 
 
     }
