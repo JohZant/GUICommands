@@ -102,12 +102,12 @@ public class Menu {
             List<String> lore = new ArrayList<String>();
             //placeholder-ize lore
             for (String l : item.getLore()) {
-                lore.add(getPlaceholderString(l));
+                lore.add(plugin.getPlaceholderString(player, l));
             }
             meta.setLore(lore);
 
             //set name
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getPlaceholderString(item.getDisplayName())));
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getPlaceholderString(player, item.getDisplayName())));
 
             guiStack.setItemMeta(meta);
 
@@ -121,6 +121,7 @@ public class Menu {
     public void refreshMenu(InventoryClickEvent event) {
 
         Inventory gui = event.getClickedInventory();
+        player = (Player)event.getWhoClicked();
 
         for (Item item : getItems()) {
 
@@ -131,25 +132,17 @@ public class Menu {
             List<String> lore = new ArrayList<String>();
             //placeholder-ize lore
             for (String l : item.getLore()) {
-                lore.add(getPlaceholderString(l));
+                lore.add(plugin.getPlaceholderString(player,l));
             }
             meta.setLore(lore);
 
             //set name
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getPlaceholderString(item.getDisplayName())));
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getPlaceholderString(player, item.getDisplayName())));
 
             guiStack.setItemMeta(meta);
 
             gui.setItem(item.getSlot(), guiStack);
         }
-    }
-
-    private String getPlaceholderString(String str) {
-        //check if we are using placeholder api
-        if (plugin.placeholderAPIEnabled) {
-            str = PlaceholderAPI.setPlaceholders(player, str);
-        }
-        return str;
     }
 
 }
