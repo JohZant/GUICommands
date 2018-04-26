@@ -158,10 +158,18 @@ public class GUICommandsListener implements Listener {
                         + ChatColor.RESET
                         + CommandToRun.replace("[message]", "").trim());
             }
-            else if(CommandToRun.contains("[close]")){
+            else if(CommandToRun.contains("[close]")) {
                 //close menu
                 player.closeInventory();//close invent for player
                 plugin.cmdMemoryList.remove(savedCmds);
+            }
+            else if (CommandToRun.contains("[refresh]")){
+                //refresh item that was clicked
+
+
+
+
+
             } else {
                 //don't know how to handle.... let console know
                 plugin.console.log("Unknown command: " + CommandToRun);
