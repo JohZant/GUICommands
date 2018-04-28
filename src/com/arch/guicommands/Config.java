@@ -123,8 +123,19 @@ public class Config {
                 .getKeys(false);
         for (String item : menuItems) {
             Item tempItem = new Item();
-            tempItem.formatItem(localConfigFile, itemsPath + "." + item);
-            itemList.add(tempItem);
+            if(tempItem.formatItem(localConfigFile, itemsPath + "." + item)) {
+                //item was successfully created, add to list
+                itemList.add(tempItem);
+            }
+            else{
+                //there was an issue with the item. Let the console know
+                plugin.console.log("There was an issue with menu "
+                        + ChatColor.YELLOW + key
+                        + ChatColor.RESET + ". Item "
+                        + ChatColor.LIGHT_PURPLE + item
+                        + ChatColor.RESET + " was not able to be loaded."
+                );
+            }
         }
         tempMenu.setItems(itemList);
 
