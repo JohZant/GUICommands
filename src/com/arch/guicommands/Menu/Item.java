@@ -75,18 +75,18 @@ public class Item {
 
 
     /* populates this from config*/
-    public void formatItem(FileConfiguration localConfig, String key) {
+    public boolean formatItem(FileConfiguration localConfig, String key) {
 
         //populate material
         String matName = localConfig.getString(key + ".material").toUpperCase();
         _Material = Material.matchMaterial(matName);
         if (_Material == null) {
             //material does not exist
-            return;
+            return false;
         }
 
         //set material data
-        Data = (short)localConfig.getInt(key + ".data");
+        Data = (short) localConfig.getInt(key + ".data");
 
         //get amount
         Amount = localConfig.getInt(key + ".amount");
@@ -96,9 +96,9 @@ public class Item {
 
         //get display name
         DisplayName = ChatColor.translateAlternateColorCodes(
-                        '&',
-                        localConfig.getString(key + ".display_name")
-                );
+                '&',
+                localConfig.getString(key + ".display_name")
+        );
 
         //get lore
         Lore = new ArrayList<String>();
@@ -108,10 +108,9 @@ public class Item {
         }
 
 
-
         //get commands - player
         Commands = localConfig.getStringList(key + ".commands");
 
-
+        return true;
     }
 }
