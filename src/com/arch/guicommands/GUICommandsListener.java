@@ -92,6 +92,11 @@ public class GUICommandsListener implements Listener {
     /* This is the start of the running of commands */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+        //if clicked outside of area, return
+        if(event.getCurrentItem() == null){
+            return;
+        }
+
         //test if this is one of our menus
         Menu menu = null;
         Boolean ourMenu = false;
@@ -121,7 +126,6 @@ public class GUICommandsListener implements Listener {
 
         //if item clicked is null, just do nothing
         if (item == null) {
-            event.setCancelled(true);//just in case they were putting the item into the inventory.... sneaky sneaky players
             return;
         }
         //get stored arrays
