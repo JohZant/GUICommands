@@ -143,16 +143,6 @@ public class GUICommandsListener implements Listener {
 
         String CommandToRun;//this string will hold every command
 
-        //execute console commands
-        for (String consoleCMD : item.getCommands()) {
-            CommandToRun = consoleCMD.replace("{player}", player.getName());//puts this player in the command
-            //add in args
-            for (Argument a : savedCmds.args) {
-                CommandToRun = CommandToRun.replace("$arg" + a.getArgNum(), a.getName());
-            }
-
-
-        String CommandToRun;//this string will hold every command
 
         //execute console commands
         for (String consoleCMD : item.getCommands()) {
